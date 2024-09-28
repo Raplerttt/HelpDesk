@@ -1,6 +1,6 @@
 import React from "react";
 
-const SignUp = () => {
+const Login = () => {
     return(
         <div className="flex items-center justify-between px-10 mt-20 max-w-6xl mx-auto">
       {/* Logo Section (Sebelah Kiri) */}
@@ -21,26 +21,6 @@ const SignUp = () => {
         <h2 className="text-2xl font-bold mb-8 text-gray-800 text-center">Masuk</h2>
         <form>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nama_lengkap">
-              Nama Lengkap
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="nama_lengkap"
-              type="text"
-              placeholder="Masukkan Nama Lengkap"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="text"
-              placeholder="Masukkan Email Anda"
-            />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
@@ -64,20 +44,26 @@ const SignUp = () => {
               placeholder="********"
             />
           </div>
-          <div className="flex items-center justify-end">
+          <div className="flex items-center justify-between">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
             >
-              Daftar
+              Masuk
             </button>
+            <a
+              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+              href="#"
+            >
+              Lupa Password?
+            </a>
           </div>
           <div className="flex items-center mt-5">
           <a
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              href="/Login"
+              href="/"
             >
-              Sudah Punya Akun?
+              Belum Punya Akun?
             </a>
           </div>
         </form>
@@ -86,4 +72,4 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+export default Login;

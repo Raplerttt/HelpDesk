@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import SignUp from '../components/SignUp';
 import Footer from '../components/Footer';
 
-function HomePage (){
+const SignUpPage = () => {
     return (
         <div>
         <Navbar/>
@@ -13,4 +13,4 @@ function HomePage (){
     );
 };
 
-export default HomePage;
+export default SignUpPage;
