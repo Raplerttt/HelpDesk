@@ -24,8 +24,10 @@ const Layanan = () => {
         <div className="grid grid-cols-3 gap-6 w-full max-w-5xl mx-auto">
           {/* Layanan 1 */}
           <div className="flex flex-col items-center">
+            <a href="/Formulir">
             <img src="/assets/layanan1.png" alt="Layanan 1" className="w-20 h-20 mb-2" />
             <p className="text-center text-lg font-medium">Layanan 1</p>
+            </a>
           </div>
           {/* Layanan 2 */}
           <div className="flex flex-col items-center">

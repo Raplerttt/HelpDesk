@@ -8,7 +8,9 @@ const Navbar = () => {
           Pusat
         </div>
         <div className="text-blue-700 text-xl font-bold">
+          <a href="/Layanan">
           Bantuan
+          </a>
         </div>
         <div className="md:hidden">
           <button className="text-white focus:outline-none">

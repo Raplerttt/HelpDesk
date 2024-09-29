@@ -1,6 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate(); // Inisialisasi navigate
+
+  const handleLogin = () => {
+    navigate('/layanan'); // Arahkan ke halaman home atau halaman tujuan
+  };
     return(
         <div className="flex items-center justify-between px-10 mt-20 max-w-6xl mx-auto">
       {/* Logo Section (Sebelah Kiri) */}
@@ -46,6 +52,7 @@ const Login = () => {
           </div>
           <div className="flex items-center justify-between">
             <button
+              onClick={handleLogin}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
             >

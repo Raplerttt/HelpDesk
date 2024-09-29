@@ -5,7 +5,9 @@ const Footer = () => {
     <footer className="bg-white text-gray-800 py-3 flex justify-between items-center px-10 mt-20 rounded-lg">
       {/* Logo Kecil dan Copyright (Sebelah Kiri) */}
       <div className="flex flex-col items-center">
+        <a href="/Layanan">
         <img src="/assets/01.png" alt="Logo" className="w-10 h-10" />
+        </a>
         <p className="text-sm mt-2">© 2024 Diskominfo.</p>
       </div>
 
