@@ -5,18 +5,16 @@ import LoginPage from './pages/LoginPage';
 import LayananPage from './pages/LayananPage';
 import FormPage from './pages/FormPage';
 import LaporanPage from './pages/LaporanPage';
-import { useState } from 'react';
 
 function App() {
-  const [reportData, setReportData] = useState(null); // State untuk menyimpan data laporan
   return (
     <Router>
       <Routes>
         <Route path='/' element={<SignUpPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/layanan' element={<LayananPage />} />
-        <Route path='/Formulir' element={<FormPage/>} />
-        <Route path='/Laporan' element={<LaporanPage />} />
+        <Route path='/formulir' element={<FormPage/>} />
+        <Route path='/laporan' element={<LaporanPage />} />
       </Routes>
     </Router>
   );

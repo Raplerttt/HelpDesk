@@ -8,7 +8,7 @@ const Navbar = () => {
           Pusat
         </div>
         <div className="text-blue-700 text-xl font-bold">
-          <a href="/Layanan">
+          <a href="/layanan">
           Bantuan
           </a>
         </div>

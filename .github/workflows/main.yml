@@ -1,25 +1,37 @@
-name: HelpDesk Integration
+name: CI Workflow on macOS
 
 on:
   push:
     branches:
-      - "main"
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      # Step 1: Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js (sesuaikan dengan versi yang dibutuhkan)
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "22"
+          node-version: '22' # atau sesuaikan dengan versi Node.js yang dibutuhkan
+          cache: 'npm'
 
-      - name: Install Dependencies
+      # Step 3: Install dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Build
+      # Step 4: Run tests (optional, sesuaikan dengan perintah test project Anda)
+      - name: Run tests
+        run: npm test
+
+      # Step 5: Build project (optional, jika ada proses build)
+      - name: Build project
         run: npm run build
