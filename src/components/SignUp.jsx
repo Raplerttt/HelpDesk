@@ -1,99 +1,144 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-    return(
-        <div className="flex items-center justify-between px-10 mt-20 max-w-6xl mx-auto">
-      {/* Logo Section (Sebelah Kiri) */}
-      <div className="flex flex-col items-center p-2">
-        <img
-          src="/assets/01.png"
-          alt="Logo"
-          className="w-80 h-80 mb-1"
-        />
-    <div className="flex flex-col items-center">
-      <p className="text-orange-400 text-5xl font-bold">Pusat</p> {/* Tanpa margin bawah */}
-      <p className="text-blue-700 text-5xl font-bold -mt-11">Bantuan</p> {/* Tanpa margin atas */}
-    </div>
-      </div>
+    const [nik, setNik] = useState('');
+    const [fullName, setFullName] = useState('');
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    
+    const navigate = useNavigate(); // Inisialisasi useNavigate untuk navigasi
 
-      {/* Form Section (Sebelah Kanan) */}
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md ">
-        <h2 className="text-2xl font-bold mb-8 text-gray-800 text-center">Daftar</h2>
-        <form>
-        <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nama_lengkap">
-              NIK
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="nama_lengkap"
-              type="text"
-              placeholder="Masukkan NIK Anda"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nama_lengkap">
-              Nama Lengkap
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="nama_lengkap"
-              type="text"
-              placeholder="Masukkan Nama Lengkap"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="text"
-              placeholder="Masukkan Email Anda"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-              placeholder="Masukkan Username Anda"
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              placeholder="********"
-            />
-          </div>
-          <div className="flex items-center justify-end">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-            >
-              Daftar
-            </button>
-          </div>
-          <div className="flex items-center mt-5">
-          <a
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              href="/Login"
-            >
-              Sudah Punya Akun?
-            </a>
-          </div>
-        </form>
-      </div>
-    </div>
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevent page reload
+
+        try {
+            const response = await axios.post('http://localhost:5000/api/users', { // URL lengkap ke endpoint backend
+                NIK: nik, // Pastikan parameter sesuai dengan yang diharapkan di backend
+                nama_lengkap: fullName, // Nama parameter sesuai backend
+                email,
+                username,
+                password,
+            });
+            console.log(response.data); // Handle success
+            alert('User registered successfully!'); // Pop up berhasil
+            navigate('/layanan'); // Redirect ke halaman utama (ganti '/layanan' dengan path halaman utama Anda)
+        } catch (error) {
+            console.error(error);
+            alert('Error registering user: ' + (error.response?.data.error || 'Unknown error')); // Ubah ke 'error' jika backend mengembalikan kesalahan dengan nama tersebut
+        }
+    };
+
+    return (
+        <div className="flex items-center justify-between px-10 mt-20 max-w-6xl mx-auto">
+            {/* Logo Section (Sebelah Kiri) */}
+            <div className="flex flex-col items-center p-2">
+                <img
+                    src="/assets/01.png"
+                    alt="Logo"
+                    className="w-80 h-80 mb-1"
+                />
+                <div className="flex flex-col items-center">
+                    <p className="text-orange-400 text-5xl font-bold">Pusat</p>
+                    <p className="text-blue-700 text-5xl font-bold -mt-11">Bantuan</p>
+                </div>
+            </div>
+
+            {/* Form Section (Sebelah Kanan) */}
+            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+                <h2 className="text-2xl font-bold mb-8 text-gray-800 text-center">Daftar</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nik">
+                            NIK
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="nik"
+                            type="text"
+                            placeholder="Masukkan NIK Anda"
+                            value={nik}
+                            onChange={(e) => setNik(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
+                            Nama Lengkap
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="fullName"
+                            type="text"
+                            placeholder="Masukkan Nama Lengkap"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                            Email
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="email"
+                            type="email"
+                            placeholder="Masukkan Email Anda"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                            Username
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="username"
+                            type="text"
+                            placeholder="Masukkan Username Anda"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="mb-6">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                            Password
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            id="password"
+                            type="password"
+                            placeholder="********"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="flex items-center justify-end">
+                        <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            type="submit"
+                        >
+                            Daftar
+                        </button>
+                    </div>
+                    <div className="flex items-center mt-5">
+                        <a
+                            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                            href="/Login"
+                        >
+                            Sudah Punya Akun?
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     );
 };
 

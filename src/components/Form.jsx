@@ -1,9 +1,18 @@
 import React from 'react';
+const {useNavigate} = require('react-router-dom');
 
 const Form = () => {
+
+    const navigate = useNavigate();
+
+
+    const kembali = () => {
+        navigate('/layanan');
+    }
     return (
         <div className="min-h-screen p-10">
-            <button className="text-blue-500 font-bold mb-6 ml-20">
+            <button className="text-blue-500 font-bold mb-6 ml-20"
+                    onClick={kembali}>
                 &larr; Kembali
             </button>
             <div className="bg-white p-10 rounded-lg flex w-full max-w-6xl mx-auto">
