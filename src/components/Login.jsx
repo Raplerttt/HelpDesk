@@ -22,13 +22,11 @@ const Login = () => {
             // Menyimpan token ke localStorage
             localStorage.setItem('token', response.data.token);
             
-            // Mengatur waktu kedaluwarsa token (misalnya, 1 jam = 3600000 ms)
-            const expirationTime = 3600000; // 1 jam
             setTimeout(() => {
                 localStorage.removeItem('token');
                 alert('Token telah kedaluwarsa, silakan login kembali.');
                 navigate('/'); // Redirect ke halaman login
-            }, expirationTime);
+            }, 100);
             
             navigate('/layanan'); // Redirect ke halaman utama
         } catch (error) {
