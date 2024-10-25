@@ -6,43 +6,48 @@ const MediaPartner = () => {
       <div className="grid grid-cols-4 items-center gap-6 max-w-4xl mx-auto">
         {/* Baris Pertama */}
         <a href="#"><img 
-          src="/assets/01.png" 
+          src="/assets/arimbi.png" 
           alt="Gambar 1" 
           className="w-40 h-40 object-contain"
         /></a>
         <a href="#"><img 
-          src="/assets/01.png" 
+          src="/assets/bcc.png" 
           alt="Gambar 1" 
           className="w-40 h-40 object-contain"
         /></a>
         <a href="#"><img 
-          src="/assets/01.png" 
+          src="/assets/data.png" 
           alt="Gambar 1" 
           className="w-40 h-40 object-contain"
         /></a>
         <a href="#"><img 
-          src="/assets/01.png" 
+          src="/assets/lapor.png" 
           alt="Gambar 1" 
           className="w-40 h-40 object-contain"
         /></a>
         {/* Baris Kedua */}
         <a href="#"><img 
-          src="/assets/01.png" 
+          src="/assets/pmo.png" 
           alt="Gambar 1" 
           className="w-40 h-40 object-contain"
         /></a>
         <a href="#"><img 
-          src="/assets/01.png" 
+          src="/assets/ppid.png" 
           alt="Gambar 1" 
           className="w-40 h-40 object-contain"
         /></a>
         <a href="#"><img 
-          src="/assets/01.png" 
+          src="/assets/repositoryapps.png" 
           alt="Gambar 1" 
           className="w-40 h-40 object-contain"
         /></a>
         <a href="#"><img 
-          src="/assets/01.png" 
+          src="/assets/saring.png" 
+          alt="Gambar 1" 
+          className="w-40 h-40 object-contain"
+        /></a>
+        <a href="#"><img 
+          src="/assets/smartcity-bdg.png" 
           alt="Gambar 1" 
           className="w-40 h-40 object-contain"
         /></a>
