@@ -11,7 +11,7 @@ const Login = () => {
         e.preventDefault(); // Mencegah reload halaman
 
         try {
-            const response = await axios.post('http://localhost:5000/api/users/login', { 
+            const response = await axios.post('/users/login', { 
                 username,
                 password,
             });
