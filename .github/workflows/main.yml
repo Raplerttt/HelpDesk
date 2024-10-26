@@ -21,7 +21,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Disarankan menggunakan LTS atau sesuaikan dengan kebutuhan
+          node-version: '22' # Disarankan menggunakan LTS atau sesuaikan dengan kebutuhan
           cache: 'npm'
 
       # Step 3: Cache node_modules untuk mempercepat instalasi dependency
