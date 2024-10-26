@@ -15,7 +15,7 @@ const SignUp = () => {
         e.preventDefault(); // Prevent page reload
 
         try {
-            const response = await axios.post('http://localhost:5000/api/users', { // URL lengkap ke endpoint backend
+            const response = await axios.post('/users', { // URL lengkap ke endpoint backend
                 NIK: nik, // Pastikan parameter sesuai dengan yang diharapkan di backend
                 nama_lengkap: fullName, // Nama parameter sesuai backend
                 email,
