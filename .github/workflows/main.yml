@@ -17,21 +17,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js (sesuaikan dengan versi yang dibutuhkan)
+      # Step 2: Set up Node.js (menggunakan versi LTS atau sesuaikan dengan versi yang Anda butuhkan)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22' # atau sesuaikan dengan versi Node.js yang dibutuhkan
+          node-version: '18' # Disarankan menggunakan LTS atau sesuaikan dengan kebutuhan
           cache: 'npm'
 
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        run: npm install
+      # Step 3: Cache node_modules untuk mempercepat instalasi dependency
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      # Step 4: Run tests (optional, sesuaikan dengan perintah test project Anda)
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 5: Run tests (optional, sesuaikan dengan perintah test project Anda)
       - name: Run tests
         run: npm test
 
-      # Step 5: Build project (optional, jika ada proses build)
+      # Step 6: Build project (optional, jika ada proses build)
       - name: Build project
         run: npm run build
