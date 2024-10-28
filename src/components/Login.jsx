@@ -1,49 +1,43 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate(); // Inisialisasi useNavigate untuk navigasi
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            navigate('/layanan'); // Redirect ke halaman layanan jika sudah login
+        }
+    }, [navigate]);
 
     const handleLogin = async (e) => {
-        e.preventDefault(); // Mencegah reload halaman
+        e.preventDefault();
 
         try {
-            const response = await axios.post('/users/login', { 
+            const response = await axios.post('/login', { 
                 username,
                 password,
             });
 
-            console.log(response.data); // Handle success
-            alert('Login berhasil!'); // Pop up berhasil
-            
-            // Menyimpan token ke localStorage
-            localStorage.setItem('token', response.data.token);
-            
-            setTimeout(() => {
-                localStorage.removeItem('token');
-                alert('Token telah kedaluwarsa, silakan login kembali.');
-                navigate('/'); // Redirect ke halaman login
-            }, 100);
-            
-            navigate('/layanan'); // Redirect ke halaman utama
+            console.log(response.data);
+            alert('Login berhasil!');
+
+            // Menyimpan token ke sessionStorage
+            sessionStorage.setItem('token', response.data.token);
+            navigate('/layanan');
         } catch (error) {
             console.error(error);
             alert('Error logging in: ' + (error.response?.data.error || 'Unknown error'));
         }
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('token'); // Menghapus token dari localStorage
-        alert('Anda telah logout.'); // Memberi tahu pengguna
-        navigate('/login'); // Redirect ke halaman login
-    };
-
     useEffect(() => {
         // Mengecek apakah pengguna sudah login
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (token) {
             navigate('/layanan'); // Redirect jika sudah login
         }
@@ -80,6 +74,7 @@ const Login = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             required
+                            autoComplete="username" // Menambahkan autocomplete attribute
                         />
                     </div>
                     <div className="mb-6">
@@ -94,6 +89,7 @@ const Login = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            autoComplete="current-password" // Menambahkan autocomplete attribute
                         />
                     </div>
                     <div className="flex items-center justify-between">
@@ -119,14 +115,6 @@ const Login = () => {
                         </a>
                     </div>
                 </form>
-                <div className="flex justify-center mt-5">
-                    <button
-                        onClick={handleLogout}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Logout
-                    </button>
-                </div>
             </div>
         </div>
     );

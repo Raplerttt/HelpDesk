@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -15,7 +15,7 @@ const SignUp = () => {
         e.preventDefault(); // Prevent page reload
 
         try {
-            const response = await axios.post('/users', { // URL lengkap ke endpoint backend
+            const response = await axios.post('/daftar', { // URL lengkap ke endpoint backend
                 NIK: nik, // Pastikan parameter sesuai dengan yang diharapkan di backend
                 nama_lengkap: fullName, // Nama parameter sesuai backend
                 email,
@@ -104,6 +104,7 @@ const SignUp = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             required
+                            autoComplete="username" // Menambahkan autocomplete attribute
                         />
                     </div>
                     <div className="mb-6">
@@ -118,6 +119,7 @@ const SignUp = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            autoComplete="current-password" // Menambahkan autocomplete attribute
                         />
                     </div>
                     <div className="flex items-center justify-end">

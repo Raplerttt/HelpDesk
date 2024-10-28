@@ -1,8 +1,16 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa'; // Import icon search
 
-
 const Layanan = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      const token = sessionStorage.getItem('token');
+      if (!token) {
+          navigate('/login'); // Redirect jika token tidak ada
+      }
+  }, [navigate]);
 
   return (
     <div className="min-h-screen flex flex-col items-center py-10">
@@ -87,6 +95,7 @@ const Layanan = () => {
               </a>
             </div>
           </div>
+          {/* Layanan 8 */}
           <div className="flex flex-col items-center">
             <div className="border-2 border-black p-2 bg-gray-100">
               <a href="/formulir">
@@ -95,6 +104,7 @@ const Layanan = () => {
               </a>
             </div>
           </div>
+          {/* Layanan 9 */}
           <div className="flex flex-col items-center">
             <div className="border-2 border-black p-2 bg-gray-100">
               <a href="/formulir">
