@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from './LoadingSpinner'; // Import komponen LoadingSpinner
 
 const SignUp = () => {
     const [nik, setNik] = useState('');
@@ -8,31 +9,35 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    
+    const [loading, setLoading] = useState(false); // State untuk loading
+
     const navigate = useNavigate(); // Inisialisasi useNavigate untuk navigasi
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent page reload
+        setLoading(true); // Set loading menjadi true sebelum melakukan request
 
         try {
             const response = await axios.post('/daftar', { // URL lengkap ke endpoint backend
-                NIK: nik, // Pastikan parameter sesuai dengan yang diharapkan di backend
-                nama_lengkap: fullName, // Nama parameter sesuai backend
+                NIK: nik,
+                nama_lengkap: fullName,
                 email,
                 username,
                 password,
             });
             console.log(response.data); // Handle success
             alert('User registered successfully!'); // Pop up berhasil
-            navigate('/layanan'); // Redirect ke halaman utama (ganti '/layanan' dengan path halaman utama Anda)
+            navigate('/layanan'); // Redirect ke halaman utama
         } catch (error) {
             console.error(error);
-            alert('Error registering user: ' + (error.response?.data.error || 'Unknown error')); // Ubah ke 'error' jika backend mengembalikan kesalahan dengan nama tersebut
+            alert('Error registering user: ' + (error.response?.data.error || 'Unknown error'));
+        } finally {
+            setLoading(false); // Set loading menjadi false setelah selesai
         }
     };
 
     return (
-        <div className="flex items-center justify-between px-10 mt-20 max-w-6xl mx-auto">
+        <div className="flex items-center justify-between px-10 mt-20 max-w-6xl mx-auto relative">
             {/* Logo Section (Sebelah Kiri) */}
             <div className="flex flex-col items-center p-2">
                 <img
@@ -104,7 +109,7 @@ const SignUp = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             required
-                            autoComplete="username" // Menambahkan autocomplete attribute
+                            autoComplete="username"
                         />
                     </div>
                     <div className="mb-6">
@@ -119,7 +124,7 @@ const SignUp = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            autoComplete="current-password" // Menambahkan autocomplete attribute
+                            autoComplete="current-password"
                         />
                     </div>
                     <div className="flex items-center justify-end">
@@ -140,6 +145,9 @@ const SignUp = () => {
                     </div>
                 </form>
             </div>
+
+            {/* Tampilkan Spinner jika loading */}
+            {loading && <LoadingSpinner />}
         </div>
     );
 };
