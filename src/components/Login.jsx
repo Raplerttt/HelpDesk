@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import ikon mata
+import '../style/buttonpass.css'
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State untuk kontrol visibilitas password
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -82,6 +85,8 @@ const Login = () => {
         password={password} 
         setPassword={setPassword} 
         handleLogin={handleLogin} 
+        showPassword={showPassword} 
+        setShowPassword={setShowPassword} // Pass state dan setter untuk password
       />
     </div>
   );
@@ -99,8 +104,8 @@ const LogoSection = () => (
 );
 
 // Komponen untuk Form Login
-const LoginForm = ({ username, setUsername, password, setPassword, handleLogin }) => (
-  <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md ">
+const LoginForm = ({ username, setUsername, password, setPassword, handleLogin, showPassword, setShowPassword }) => (
+  <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
     <h2 className="text-2xl font-bold mb-8 text-gray-800 text-center">Masuk</h2>
     <form onSubmit={handleLogin}>
       <FormInput
@@ -111,14 +116,29 @@ const LoginForm = ({ username, setUsername, password, setPassword, handleLogin }
         value={username}
         onChange={setUsername}
       />
-      <FormInput
-        id="password"
-        label="Password"
-        type="password"
-        placeholder="********"
-        value={password}
-        onChange={setPassword}
-      />
+      <div className="mb-4 relative"> {/* Tambahkan relative di sini */}
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+          Password
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10" // Tambahkan padding kanan untuk memberi ruang bagi ikon
+          id="password"
+          type={showPassword ? "text" : "password"} // Toggle antara text dan password
+          placeholder="********"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          autoComplete="current-password"
+        />
+        <button 
+          type="button" 
+          className="absolute inset-y-0 right-2 flex items-center button-icon" // Atur ke right-2 untuk sedikit menggeser ikon ke dalam
+          style={{ top: '72%', transform: 'translateY(-50%)' }} // Geser ke tengah secara vertikal
+          onClick={() => setShowPassword(!showPassword)} // Toggle showPassword
+        >
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </button>
+      </div>
       <div className="flex items-center justify-between">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

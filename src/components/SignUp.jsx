@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
-import LoadingSpinner from './LoadingSpinner'; // Import komponen LoadingSpinner
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import ikon mata
+import LoadingSpinner from './LoadingSpinner';
+import "../style/buttonpass.css"
 
 const SignUp = () => {
     const [nik, setNik] = useState('');
@@ -9,30 +11,31 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false); // State untuk loading
+    const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // State untuk toggle password visibility
 
-    const navigate = useNavigate(); // Inisialisasi useNavigate untuk navigasi
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent page reload
-        setLoading(true); // Set loading menjadi true sebelum melakukan request
+        e.preventDefault();
+        setLoading(true);
 
         try {
-            const response = await axios.post('/daftar', { // URL lengkap ke endpoint backend
+            const response = await axios.post('/daftar', {
                 NIK: nik,
                 nama_lengkap: fullName,
                 email,
                 username,
                 password,
             });
-            console.log(response.data); // Handle success
-            alert('User registered successfully!'); // Pop up berhasil
-            navigate('/layanan'); // Redirect ke halaman utama
+            console.log(response.data);
+            alert('User registered successfully!');
+            navigate('/layanan');
         } catch (error) {
             console.error(error);
             alert('Error registering user: ' + (error.response?.data.error || 'Unknown error'));
         } finally {
-            setLoading(false); // Set loading menjadi false setelah selesai
+            setLoading(false);
         }
     };
 
@@ -112,20 +115,27 @@ const SignUp = () => {
                             autoComplete="username"
                         />
                     </div>
-                    <div className="mb-6">
+                            <div className="mb-6 relative">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                             Password
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline pr-10" // Tambahkan padding kanan untuk memberi ruang bagi ikon
                             id="password"
-                            type="password"
+                            type={showPassword ? "text" : "password"} // Toggle antara text dan password
                             placeholder="********"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             autoComplete="current-password"
                         />
+                        <button 
+                            type="button" 
+                            className="absolute inset-y-0 right-2 flex items-center button-icon" // Atur ke right-2 untuk sedikit menggeser ikon ke dalam
+                            onClick={() => setShowPassword(!showPassword)} // Toggle showPassword
+                        >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
                     </div>
                     <div className="flex items-center justify-end">
                         <button
