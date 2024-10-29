@@ -1,24 +1,63 @@
-import React from 'react';
-const {useNavigate} = require('react-router-dom');
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from '../utils/axios';
 
 const Form = () => {
-
+    const [nik, setNik] = useState('');
+    const [loading, setLoading] = useState(true); // State untuk loading
     const navigate = useNavigate();
 
-
+    // Fungsi untuk kembali ke halaman layanan
     const kembali = () => {
         navigate('/layanan');
+    };
+
+    useEffect(() => {
+        const fetchUserNik = async () => {
+            try {
+                const token = sessionStorage.getItem('token');
+                const response = await axios.get('users/profile', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                console.log("Data pengguna:", response.data); // Tambahkan ini untuk debugging
+                setNik(response.data.user.NIK); // Pastikan untuk mengakses NIK dengan benar
+            } catch (error) {
+                console.error("Error fetching user NIK:", error);
+                alert('Error: ' + (error.response?.data.error || 'Tidak dapat mengambil NIK'));
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchUserNik();
+    }, []);
+    
+
+    // Jika loading, tampilkan loader atau pesan
+    if (loading) {
+        return <div>Loading...</div>; // Anda dapat menyesuaikan loader sesuai kebutuhan
     }
+
     return (
         <div className="min-h-screen p-10">
-            <button className="text-blue-500 font-bold mb-6 ml-20"
-                    onClick={kembali}>
+            <button className="text-blue-500 font-bold mb-6 ml-20" onClick={kembali}>
                 &larr; Kembali
             </button>
             <div className="bg-white p-10 rounded-lg flex w-full max-w-6xl mx-auto">
                 <div className="w-1/2 pr-6">
                     <h2 className="text-2xl font-bold mb-4 text-center">Formulir</h2>
                     <form>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-medium mb-2">NIK</label>
+                            <input
+                                type="text"
+                                value={nik}
+                                readOnly
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                            />
+                        </div>
                         <div className="mb-4">
                             <label className="block text-gray-700 font-medium mb-2">Tanggal</label>
                             <input
@@ -28,13 +67,14 @@ const Form = () => {
                         </div>
                         <div className="mb-4">
                             <label className="block text-gray-700 font-medium mb-2">Pilihan Kendala</label>
-                            <select
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
-                            >
+                            <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
                                 <option>Pilih Kendala</option>
                                 <option>Masalah Teknis</option>
-                                <option>Masalah Pembayaran</option>
-                                <option>Masalah Akses</option>
+                                <option>Permintaan Kendala</option>
+                                <option>Permintaan Perubahan</option>
+                                <option>Masalah keamanan</option>
+                                <option>Pertanyaan Informasi</option>
+                                <option>Pengaduan</option>
                             </select>
                         </div>
                         <div className="mb-4">

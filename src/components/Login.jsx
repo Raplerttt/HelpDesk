@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/login', { username, password });
+      const response = await axios.post('users/login', { username, password });
       console.log(response.data);
       alert('Login berhasil!');
 
@@ -57,21 +57,6 @@ const Login = () => {
 
     return () => clearInterval(intervalId); // Bersihkan interval saat komponen di-unmount
   }, [navigate]);
-
-  useEffect(() => {
-    const resetTimer = () => {
-      sessionStorage.setItem('tokenExpiry', Date.now() + 3600000); // Reset waktu kedaluwarsa ke 1 jam dari sekarang
-    };
-
-    // Daftarkan event listeners untuk berbagai interaksi
-    const events = ['click', 'keypress', 'mousemove', 'scroll'];
-    events.forEach(event => window.addEventListener(event, resetTimer));
-
-    return () => {
-      // Hapus event listeners saat komponen di-unmount
-      events.forEach(event => window.removeEventListener(event, resetTimer));
-    };
-  }, []);
 
   return (
     <div className="flex items-center justify-between px-10 mt-20 max-w-6xl mx-auto">

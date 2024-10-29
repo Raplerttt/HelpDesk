@@ -13,15 +13,32 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false); // State untuk toggle password visibility
+    const [passwordError, setPasswordError] = useState(''); // State untuk pesan kesalahan password
 
     const navigate = useNavigate();
 
+    const validatePassword = (password) => {
+        // Regex untuk memeriksa password harus terdiri dari huruf, angka, dan karakter khusus
+        const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return regex.test(password);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // Reset pesan kesalahan
+        setPasswordError('');
+
+        // Validasi password sebelum mengirim data
+        if (!validatePassword(password)) {
+            setPasswordError('Password harus terdiri dari minimal 8 karakter, termasuk huruf, angka, dan karakter khusus.');
+            return;
+        }
+
         setLoading(true);
 
         try {
-            const response = await axios.post('/daftar', {
+            const response = await axios.post('users/daftar', {
                 NIK: nik,
                 nama_lengkap: fullName,
                 email,
@@ -115,12 +132,12 @@ const SignUp = () => {
                             autoComplete="username"
                         />
                     </div>
-                            <div className="mb-6 relative">
+                    <div className="mb-6 relative">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                             Password
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline pr-10" // Tambahkan padding kanan untuk memberi ruang bagi ikon
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline pr-10" // Tambahkan padding kanan untuk memberi ruang bagi ikon
                             id="password"
                             type={showPassword ? "text" : "password"} // Toggle antara text dan password
                             placeholder="********"
@@ -137,6 +154,10 @@ const SignUp = () => {
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </div>
+                    {/* Pesan kesalahan akan ditampilkan di atas tombol */}
+                    {passwordError && (
+                        <p className="text-red-500 text-xs mb-4">{passwordError}</p> // Tampilkan pesan kesalahan jika ada
+                    )}
                     <div className="flex items-center justify-end">
                         <button
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

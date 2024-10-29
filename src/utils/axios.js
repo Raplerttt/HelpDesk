@@ -1,9 +1,8 @@
-// src/utils/axios.js
 import axios from "axios";
 
 // Membuat instance Axios dengan konfigurasi dasar
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api/users", // Ganti dengan baseURL backend Anda
+  baseURL: "http://localhost:5000/api", // Ganti dengan baseURL backend Anda
   headers: {
     "Content-Type": "application/json",
   },
