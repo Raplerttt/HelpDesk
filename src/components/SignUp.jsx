@@ -148,7 +148,7 @@ const SignUp = () => {
                         />
                         <button 
                             type="button" 
-                            className="absolute inset-y-0 right-2 flex items-center button-icon" // Atur ke right-2 untuk sedikit menggeser ikon ke dalam
+                            className="absolute inset-y-0 right-2 flex items-center button-icon-sign" // Atur ke right-2 untuk sedikit menggeser ikon ke dalam
                             onClick={() => setShowPassword(!showPassword)} // Toggle showPassword
                         >
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -169,7 +169,7 @@ const SignUp = () => {
                     <div className="flex items-center mt-5">
                         <a
                             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                            href="/Login"
+                            href="/"
                         >
                             Sudah Punya Akun?
                         </a>

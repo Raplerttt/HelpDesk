@@ -1,8 +1,12 @@
-.button-icon {
-    top: 25px;
+.button-icon-in {
+    margin-top: 15px;
     right: 15px;
 }
 
+.button-icon-sign {
+    margin-top: 25px;
+    right: 15px;
+}
 .notiffy-icon {
     top: 20px;
     right: 15px;

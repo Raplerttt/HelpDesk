@@ -16,7 +16,7 @@ const Navbar = () => {
     // Menghapus token dari sessionStorage
     sessionStorage.removeItem('token');
     // Mengarahkan pengguna kembali ke halaman login
-    navigate('/login');
+    navigate('/');
   };
 
   return (
