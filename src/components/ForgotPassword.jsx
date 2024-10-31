@@ -13,7 +13,7 @@ const ForgotPasswordPopup = ({ onClose }) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full mx-4 sm:mx-0">
                 <h2 className="text-xl font-semibold mb-4 text-center">Lupa Password</h2>
                 {message && <p className="text-green-600 mb-4 text-center">{message}</p>}
                 <form onSubmit={handleSubmit}>

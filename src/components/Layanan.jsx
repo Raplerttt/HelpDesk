@@ -25,7 +25,7 @@ const Layanan = () => {
   return (
     <div className="min-h-screen flex flex-col items-center py-10">
       {/* Teks Utama */}
-      <h1 className="text-3xl font-bold mb-6">Hi, Ada yang bisa saya bantu?</h1>
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center">Hi, Ada yang bisa saya bantu?</h1>
 
       {/* Search Bar dengan Icon */}
       <SearchBar />
@@ -42,9 +42,9 @@ const SearchBar = () => (
     <input
       type="text"
       placeholder="Cari bantuan..."
-      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
+      className="flex-grow px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-12" // Atur tinggi input
     />
-    <button className="text-black px-5 py-5 rounded-r-lg">
+    <button className="bg-blue-500 text-white px-4 h-12 rounded-r-lg hover:bg-blue-600 transition duration-200">
       <FaSearch />
     </button>
   </div>
@@ -52,8 +52,8 @@ const SearchBar = () => (
 
 // Komponen untuk Menu Layanan
 const ServiceMenu = () => (
-  <div className="bg-white w-full py-10 rounded-lg">
-    <div className="grid grid-cols-3 gap-6 w-full max-w-5xl mx-auto">
+  <div className="bg-white w-full py-10 rounded-lg shadow-lg">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl mx-auto">
       {/* Array layanan yang akan dirender */}
       {serviceItems.map((service, index) => (
         <ServiceItem key={index} service={service} />
@@ -77,11 +77,13 @@ const serviceItems = [
 
 // Komponen untuk setiap item layanan
 const ServiceItem = ({ service }) => (
-  <div className="flex flex-col items-center">
-    <div className="border-2 border-black p-2 bg-gray-100">
+  <div className="flex flex-col items-center transform transition-transform duration-200 hover:scale-105">
+    <div className="border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 bg-white overflow-hidden">
       <a href={service.link}>
-        <img src={service.src} alt={service.alt} className="w-23 h-23 mb-2" />
-        <p className="text-center text-lg font-medium">{service.alt}</p>
+        <img src={service.src} alt={service.alt} className="w-full h-32 object-cover" />
+        <div className="p-4">
+          <p className="text-lg font-semibold text-gray-800 text-center">{service.alt}</p>
+        </div>
       </a>
     </div>
   </div>

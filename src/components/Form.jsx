@@ -68,12 +68,19 @@ const Form = () => {
     }
 
     return (
-        <div className="min-h-screen p-10">
-            <button className="text-blue-500 font-bold mb-6 ml-20" onClick={kembali}>
+        <div className="min-h-screen p-5 md:p-10">
+            <button className="text-blue-500 font-bold mb-6" onClick={kembali}>
                 &larr; Kembali
             </button>
-            <div className="bg-white p-10 rounded-lg flex w-full max-w-6xl mx-auto">
-                <div className="w-full lg:w-1/2 pr-6">
+            <div className="bg-white p-6 md:p-10 rounded-lg flex flex-col lg:flex-row w-full max-w-6xl mx-auto">
+                <div className="w-full lg:w-1/2 flex justify-center items-center mb-6 lg:mb-0">
+                    <img
+                        src="/assets/01.png"
+                        alt="Gambar Form"
+                        className="w-full h-auto max-w-xs md:max-w-full object-cover rounded-lg"
+                    />
+                </div>
+                <div className="w-full lg:w-1/2 lg:pl-6">
                     <h2 className="text-2xl font-bold mb-4 text-center">Formulir</h2>
                     
                     {/* Kotak untuk menampilkan nama pengguna */}
@@ -139,13 +146,6 @@ const Form = () => {
                             </button>
                         </div>
                     </form>
-                </div>
-                <div className="w-full lg:w-1/2 flex justify-center items-center m-20">
-                    <img
-                        src="/assets/01.png"
-                        alt="Gambar Form"
-                        className="w-full h-auto object-cover rounded-lg"
-                    />
                 </div>
             </div>
         </div>
