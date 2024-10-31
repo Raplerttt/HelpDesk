@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage';
 import LayananPage from './pages/LayananPage';
 import FormPage from './pages/FormPage';
 import LaporanPage from './pages/LaporanPage';
-import Profil from './components/Profil';
+import Profil from './pages/ProfilPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {

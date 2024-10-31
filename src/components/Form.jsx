@@ -23,31 +23,32 @@ const Form = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         // Cek apakah semua field terisi
         if (!tanggal || !pilihanKendala || !deskripsi) {
             alert('Silakan lengkapi semua field yang diperlukan.');
             return;
         }
-    
+
         console.log("Submitting form with values:", { tanggal, pilihanKendala, deskripsi, lampiran });
-    
+
         try {
             const token = sessionStorage.getItem('token');
             const formData = new FormData();
             formData.append('tanggal', tanggal);
             formData.append('pilihan_kendala', pilihanKendala);
             formData.append('deskripsi', deskripsi);
-    
+
             if (lampiran) {
                 formData.append('lampiran', lampiran); // hanya tambahkan jika ada lampiran
             }
-    
+
             // Log FormData untuk memeriksa isi
             for (const [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);
             }
-    
+
+            // Mengirim form dan mendapatkan response
             await axios.post('/forms/submit', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -61,7 +62,6 @@ const Form = () => {
             alert('Error: ' + (error.response?.data.error || 'Gagal mengirim form'));
         }
     };
-    
 
     if (loading) {
         return <div>Loading...</div>;

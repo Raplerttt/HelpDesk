@@ -22,9 +22,9 @@ const Navbar = () => {
   return (
     <nav className="bg-white p-4 rounded-lg shadow-md">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-orange-400 text-2xl font-bold">
+        <Link to="/layanan" className="text-orange-400 text-2xl font-bold">
           Pusat <span className="text-blue-700">Bantuan</span>
-        </div>
+        </Link>
         <div className="flex items-center space-x-4">
           {/* Render tautan jika pengguna sudah login */}
           {isLoggedIn && (
@@ -33,7 +33,7 @@ const Navbar = () => {
                 <UserIcon className="h-5 w-5 mr-1" />
                 Profil
               </Link>
-              <Link to="/cart" className="flex items-center text-blue-700 hover:text-blue-500">
+              <Link to="/laporan" className="flex items-center text-blue-700 hover:text-blue-500">
                 <ShoppingCartIcon className="h-5 w-5 mr-1" />
                 Keranjang
               </Link>
