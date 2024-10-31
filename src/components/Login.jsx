@@ -42,6 +42,7 @@ const Login = () => {
       // Tampilkan notifikasi selama 2 detik sebelum navigasi
       setTimeout(() => {
         sessionStorage.setItem('token', response.data.token);
+        sessionStorage.setItem('username', username);
         sessionStorage.setItem('tokenExpiry', Date.now() + 3600000);
         navigate('/layanan');
       }, 2000);
