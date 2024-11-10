@@ -1,4 +1,4 @@
-name: CoolKas Integration
+name: HelpDesk Integration
 
 on:
   push:
