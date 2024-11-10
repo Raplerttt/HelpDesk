@@ -68,7 +68,7 @@ const Form = () => {
     }
 
     return (
-        <div className="min-h-screen p-5 md:p-10">
+        <div className="p-5 md:p-10">
             <button className="text-blue-500 font-bold mb-6" onClick={kembali}>
                 &larr; Kembali
             </button>
@@ -86,7 +86,7 @@ const Form = () => {
                     {/* Kotak untuk menampilkan nama pengguna */}
                     {username && (
                         <div className="mb-4 p-4 border border-gray-300 rounded-lg bg-gray-50">
-                            <span className="font-medium text-gray-700">NIK Pengguna: <strong>{username}</strong></span>
+                            <span className="font-medium text-gray-700">Username : <strong>{username}</strong></span>
                         </div>
                     )}
                     
