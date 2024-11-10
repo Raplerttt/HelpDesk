@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa'; // Import icon search
 
 const Layanan = () => {
   const navigate = useNavigate();
 
-  // Fungsi untuk memeriksa token
-  const checkToken = () => {
+  // Fungsi untuk memeriksa token, menggunakan useCallback agar tidak berubah di setiap render
+  const checkToken = useCallback(() => {
     const token = sessionStorage.getItem('token');
     const tokenExpiry = sessionStorage.getItem('tokenExpiry');
 
@@ -16,11 +16,11 @@ const Layanan = () => {
       sessionStorage.removeItem('tokenExpiry');
       navigate('/login'); // Redirect jika token tidak ada atau kedaluwarsa
     }
-  };
+  }, [navigate]); // Memastikan checkToken hanya berubah jika navigate berubah
 
   useEffect(() => {
     checkToken(); // Panggil fungsi pemeriksaan token
-  }, [navigate]);
+  }, [checkToken]); // Sertakan checkToken dalam dependency array
 
   return (
     <div className="min-h-screen flex flex-col items-center py-10">
