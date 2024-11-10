@@ -7,8 +7,6 @@ import OverlayLoading from './admin-components/OverlayLoading';
 import SidebarSearch from './admin-components/SidebarSearch';
 import MenuItem from './admin-components/MenuItem';
 import SmallBox from './admin-components/SmallBox';
-import useScroll from '../../hooks/useScroll';
-import useWindowSize from '../../hooks/useWindowSize';
 import ReportDetailModal from './admin-components/ReportDetailModal';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
@@ -36,9 +34,6 @@ const Dashboard = () => {
   const [dummyStats, setDummyStats] = useState(null);
   const [selectedReport, setSelectedReport] = useState(null); // State to store selected report
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
-
-  const scrollPosition = useScroll();
-  const windowSize = useWindowSize();
 
   const calculateStats = (reports) => {
     const reportTypes = ['Masalah Teknis', 'Permintaan Perubahan', 'Masalah Keamanan', 'Pertanyaan Informasi', 'Pengaduan'];
@@ -78,17 +73,21 @@ const Dashboard = () => {
     setShowModal(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => {
-      setDummyStats(calculateStats(sampleReports));
+      setDummyStats(calculateStats(sampleReports)); // Replace sampleReports with your actual data
       setIsLoading(false);
     }, 2000);
-  }, []);
+  }, []); //
+
+//   useEffect(() => {
+//     setIsLoading(true);
+//     setTimeout(() => {
+//       setDummyStats(calculateStats(sampleReports));
+//       setIsLoading(false);
+//     }, 2000);
+//   }, []);
 
   const chartData = {
     labels: ['Pending', 'In Progress', 'Completed'],

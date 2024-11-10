@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaTachometerAlt, FaClipboardCheck, FaBug, FaCogs } from 'react-icons/fa';
+import { FaTachometerAlt, FaClipboardCheck, FaCogs } from 'react-icons/fa';
 import SidebarSearch from './admin-components/SidebarSearch';
 import MenuItem from './admin-components/MenuItem';
 import ContentHeader from './admin-components/ContentHeader';

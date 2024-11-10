@@ -163,12 +163,13 @@ const LoginForm = ({ username, setUsername, password, setPassword, handleLogin, 
         >
           Masuk
         </button>
-        <a
+        <button
+          type="button"
           className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer"
           onClick={handleOpenPopup}
         >
           Lupa Password?
-        </a>
+        </button>
       </div>
       <div className="flex items-center mt-5">
         <a

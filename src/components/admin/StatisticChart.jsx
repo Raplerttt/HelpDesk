@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { FaTachometerAlt, FaClipboardCheck, FaBug, FaCogs } from 'react-icons/fa';
+import { FaTachometerAlt, FaClipboardCheck, FaCogs } from 'react-icons/fa';
 import SidebarSearch from './admin-components/SidebarSearch';
 import MenuItem from './admin-components/MenuItem';
 import ContentHeader from './admin-components/ContentHeader';
