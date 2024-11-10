@@ -1,9 +1,9 @@
 module.exports = {
-    transform: {
-      "^.+\\.jsx?$": "babel-jest", // Untuk menggunakan Babel untuk transformasi file JS/JSX
-    },
-    transformIgnorePatterns: [
-      "/node_modules/(?!(axios)/)", // Agar Jest tetap meng-transform kode dari Axios
-    ],
-  };
-  
+  transform: {
+    '^.+\\.[t|j]sx?$': 'babel-jest',
+  },
+  extensionsToTreatAsEsm: ['.ts', '.tsx', '.js'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!axios)/', // This allows axios to be transformed by Babel
+  ],
+};
