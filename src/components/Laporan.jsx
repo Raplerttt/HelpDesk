@@ -55,20 +55,21 @@ const LaporanPage = () => {
                                 <p className="text-gray-700"><strong>Deskripsi:</strong> {report.deskripsi}</p>
                             </div>
                             <div className="flex flex-col items-end">
-                                {report.lampiran && (
-                                    <div className="mt-2">
-                                        <strong>Lampiran:</strong>
-                                        <a href={report.lampiran} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline text-sm">
-                                            {report.lampiran.split('/').pop()}
-                                        </a>
-                                    </div>
-                                )}
-                                {/* Menampilkan status dengan warna sesuai */}
-                                <div className={`mt-2 px-3 py-1 text-white rounded ${statusColors[report.status]}`}>
-                                    {report.status}
+                            {report.lampiran && (
+                                <div className="mt-2">
+                                    <strong>Lampiran:</strong>
+                                    {console.log(report.lampiran)}
+                                    <a href={report.lampiran} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline text-sm">
+                                        {report.lampiran.split('/').pop()}
+                                    </a>
                                 </div>
+                            )}
+                            {/* Menampilkan status dengan warna sesuai */}
+                            <div className={`mt-2 px-3 py-1 text-white rounded ${statusColors[report.status]}`}>
+                                {report.status}
                             </div>
                         </div>
+                    </div>
                     </div>
                 ))
             )}

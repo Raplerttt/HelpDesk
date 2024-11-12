@@ -137,7 +137,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-3 gap-4 mb-6">
             <InfoBox title="Total Users" value={dummyStats.totalUsers} icon={<FaClipboardCheck />} color="blue" />
             <InfoBox title="Active Users" value={dummyStats.activeUsers} icon={<FaBug />} color="green" />
-            <InfoBox title="Total Reports" value={dummyStats.totalReports} icon={<FaCogs />} color="orange" />
+            <InfoBox title="Total Reports" value={dummyStats.totalReports} icon={<FaCogs />} color="yellow" />
             <InfoBox title="Pending Reports" value={dummyStats.pendingReports} icon={<FaClipboardCheck />} color="red" />
           </div>
         ) : (
