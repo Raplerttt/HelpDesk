@@ -11,6 +11,8 @@ import StatisticPage from './pages/StatisticPage'
 import ProtectedRoute from './components/ProtectedRoute';
 import ReportDetail from './pages/ReportDetailPage';
 import ReportList from './components/admin/ReportList';
+import AdminLoginPages from './pages/AdminLoginPages';
+import AdminSignupPages from './pages/AdminSignup';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path='/admin/statistic' element={<StatisticPage />} />
         <Route path='/admin/reports/:id' element={<ReportDetail />} />
         <Route path='/admin/reports' element={<ReportList />} />
+        <Route path='/admin/login' element={<AdminLoginPages />} />
+        <Route path='/admin/signup' element={<AdminSignupPages />} />
       </Routes>
     </Router>
   );

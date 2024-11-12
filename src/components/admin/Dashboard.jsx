@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaTachometerAlt, FaClipboardCheck, FaBug, FaCogs } from 'react-icons/fa';
+import { FaTachometerAlt, FaClipboardCheck, FaBug, FaCogs, FaBars, FaTimes } from 'react-icons/fa';
+// import axios from '../../utils/axios';
 import { Line } from 'react-chartjs-2';
 import ContentHeader from './admin-components/ContentHeader';
 import InfoBox from './admin-components/InfoBox';
@@ -14,18 +15,10 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const sampleReports = [
   { id: 1, user: 'John Doe', date: '2024-11-10', issueType: 'Masalah Teknis', description: 'Bug di halaman login', status: 'Pending', attachment: 'file1.png' },
-  { id: 2, user: 'Jane Smith', date: '2024-11-09', issueType: 'Permintaan Perubahan', description: 'Laporan tidak dapat diakses', status: 'In Progress', attachment: 'file2.png' },
-  { id: 3, user: 'Alice Brown', date: '2024-11-08', issueType: 'Masalah Keamanan', description: 'Kesalahan sistem', status: 'Completed', attachment: 'file3.png' },
-  { id: 4, user: 'Bob White', date: '2024-11-07', issueType: 'Pertanyaan Informasi', description: 'Menanyakan prosedur laporan', status: 'Pending', attachment: 'file4.png' },
-  { id: 5, user: 'Charlie Black', date: '2024-11-06', issueType: 'Pengaduan', description: 'Keluhan tentang layanan', status: 'In Progress', attachment: 'file5.png' },
 ];
 
 const dummyUsers = [
   { id: 1, name: 'John Doe', email: 'john@example.com', isActive: true },
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com', isActive: true },
-  { id: 3, name: 'Alice Brown', email: 'alice@example.com', isActive: true },
-  { id: 4, name: 'Bob White', email: 'bob@example.com', isActive: false },
-  { id: 5, name: 'Charlie Black', email: 'charlie@example.com', isActive: true },
 ];
 
 const Dashboard = () => {
@@ -34,6 +27,7 @@ const Dashboard = () => {
   const [dummyStats, setDummyStats] = useState(null);
   const [selectedReport, setSelectedReport] = useState(null); // State to store selected report
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const calculateStats = (reports) => {
     const reportTypes = ['Masalah Teknis', 'Permintaan Perubahan', 'Masalah Keamanan', 'Pertanyaan Informasi', 'Pengaduan'];
@@ -78,16 +72,8 @@ const Dashboard = () => {
     setTimeout(() => {
       setDummyStats(calculateStats(sampleReports)); // Replace sampleReports with your actual data
       setIsLoading(false);
-    }, 2000);
+    },);
   }, []); //
-
-//   useEffect(() => {
-//     setIsLoading(true);
-//     setTimeout(() => {
-//       setDummyStats(calculateStats(sampleReports));
-//       setIsLoading(false);
-//     }, 2000);
-//   }, []);
 
   const chartData = {
     labels: ['Pending', 'In Progress', 'Completed'],
@@ -118,21 +104,41 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen bg-blue-200">
-      <div className="w-64 bg-blue-900 text-black shadow-lg">
+      {/* Sidebar for Desktop */}
+      <div
+        className={`w-64 bg-blue-900 text-black shadow-lg transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0`}
+      >
         <SidebarSearch />
         <MenuItem label="Dashboard" icon={FaTachometerAlt} to="/admin/dashboard" />
         <MenuItem label="Laporan" icon={FaClipboardCheck} to="/admin/reports" />
         <MenuItem label="Statistik" icon={FaCogs} to="/admin/statistic" />
       </div>
-
-      <div className="flex-1 p-6 overflow-y-auto">
+  
+      {/* Mobile Sidebar Toggle Button - Hamburger */}
+      <button
+        className={`lg:hidden text-white absolute top-4 left-4 ${sidebarOpen ? 'hidden' : ''}`}
+        onClick={() => setSidebarOpen(true)}
+      >
+        <FaBars size={30} />
+      </button>
+  
+      {/* Mobile Sidebar Toggle Button - X */}
+      <button
+        className={`lg:hidden text-white absolute top-4 left-4 ${sidebarOpen ? 'block' : 'hidden'}`}
+        onClick={() => setSidebarOpen(false)}
+      >
+        <FaTimes size={30} />
+      </button>
+  
+      {/* Main Content Area */}
+      <div className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ${sidebarOpen ? '' : 'ml-0'}`}>
         <ContentHeader adminName="Admin Name" />
-
+  
         <div className="mb-6 text-xl font-semibold text-gray-700 border-b-2 pb-4 flex items-center space-x-2">
           <FaTachometerAlt className="text-2xl" />
           <p>Dashboard</p>
         </div>
-
+  
         {dummyStats ? (
           <div className="grid grid-cols-3 gap-4 mb-6">
             <InfoBox title="Total Users" value={dummyStats.totalUsers} icon={<FaClipboardCheck />} color="blue" />
@@ -143,7 +149,7 @@ const Dashboard = () => {
         ) : (
           <p>Loading statistics...</p>
         )}
-
+  
         <div className="grid grid-cols-3 gap-4 mb-6">
           <SmallBox title="Masalah Teknis" value={dummyStats?.['Masalah Teknis']} icon={<FaBug />} color="red" />
           <SmallBox title="Permintaan Perubahan" value={dummyStats?.['Permintaan Perubahan']} icon={<FaClipboardCheck />} color="orange" />
@@ -151,9 +157,9 @@ const Dashboard = () => {
           <SmallBox title="Pertanyaan Informasi" value={dummyStats?.['Pertanyaan Informasi']} icon={<FaBug />} color="blue" />
           <SmallBox title="Pengaduan" value={dummyStats?.['Pengaduan']} icon={<FaClipboardCheck />} color="purple" />
         </div>
-
+  
         {isLoading && <OverlayLoading />}
-
+  
         <div className="overflow-x-auto bg-gray-300 shadow-md rounded-lg border-t-4 border-blue-600">
           <table className="min-w-full table-auto">
             <thead className="bg-gray-100">
@@ -170,36 +176,34 @@ const Dashboard = () => {
             <tbody>
               {reports.map((report) => (
                 <tr key={report.id}>
-                    <button className='px-3 py-3 mt-7'
-                    onClick={() => viewReportDetail(report)}>
-                    <td className="px-6 py-3 border-b-2 border-blue-500">{report.user}</td>
-                    </button>
+                  <button className="px-1 py-3 mt-1" onClick={() => viewReportDetail(report)}>
+                    <td className="px-6 py-2 border-b-2 border-blue-500">{report.user}</td>
+                  </button>
                   <td className="px-3 py-3">{report.date}</td>
                   <td className="px-3 py-3">{report.issueType}</td>
                   <td className="px-3 py-3">{report.description}</td>
                   <td className="px-3 py-3">{report.status}</td>
                   <td className="px-10 py-3">
-                  <a href={`/path/to/attachments/${report.attachment}`} className="text-blue-600">
-                    {report.attachment}
+                    <a href={`/path/to/attachments/${report.attachment}`} className="text-blue-600">
+                      {report.attachment}
                     </a>
                   </td>
                   <td className="px-3 py-3">
-                  <div className="mt-2 relative">
-                    <select 
+                    <div className="mt-2 relative">
+                      <select 
                         value={report.status} 
                         onChange={(e) => updateReportStatus(report.id, e.target.value)} 
                         className="px-4 py-2 mr-7 bg-gray-200 text-gray-700 rounded-md appearance-none w-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out">
                         <option value="Pending">Pending</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Completed">Completed</option>
-                    </select>
-
-                    {/* Custom arrow for the select */}
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 pointer-events-none">
+                      </select>
+                      {/* Custom arrow for the select */}
+                      <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 pointer-events-none">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
-                    </span>
+                      </span>
                     </div>
                   </td>
                 </tr>
@@ -207,7 +211,7 @@ const Dashboard = () => {
             </tbody>
           </table>
         </div>
-
+  
         <div className="mb-6">
           {dummyStats ? (
             <Line data={chartData} options={chartOptions} />
@@ -215,13 +219,13 @@ const Dashboard = () => {
             <p>Loading statistics chart...</p>
           )}
         </div>
-
+  
         {showModal && selectedReport && (
-            <ReportDetailModal report={selectedReport} setShowModal={setShowModal} />
+          <ReportDetailModal report={selectedReport} setShowModal={setShowModal} />
         )}
       </div>
     </div>
-  );
+  );  
 };
 
 export default Dashboard;
