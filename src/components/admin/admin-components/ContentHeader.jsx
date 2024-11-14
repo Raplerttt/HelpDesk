@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaUser, FaBell, FaSignOutAlt, FaCog } from 'react-icons/fa';
 
-const ContentHeader = ({ adminName, notifications }) => {
+const ContentHeader = ({ notifications }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [newNotification, setNewNotification] = useState(false);
+  const [adminName, setAdminName] = useState("");
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -16,6 +17,14 @@ const ContentHeader = ({ adminName, notifications }) => {
       setNewNotification(true);
     }
   }, [notifications]);
+
+  // Mengambil nama admin dari sessionStorage
+  useEffect(() => {
+    const name = sessionStorage.getItem('adminUsername'); // Pastikan nama admin disimpan di sessionStorage saat login
+    if (name) {
+      setAdminName(name);
+    }
+  }, []);
 
   return (
     <div className="p-4 mb-10 shadow-md rounded-lg">
@@ -49,7 +58,7 @@ const ContentHeader = ({ adminName, notifications }) => {
                   <span>Edit Profile</span>
                 </Link>
                 <Link
-                  to="/logout"
+                  to="/admin/login"
                   className="flex items-center space-x-2 px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-200 ease-in-out"
                 >
                   <FaSignOutAlt size={18} />

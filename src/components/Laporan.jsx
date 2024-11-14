@@ -3,7 +3,7 @@ import axios from '../utils/axios';
 import { FiFileText, FiUser, FiCalendar, FiPaperclip } from 'react-icons/fi';  // Menggunakan ikon dari react-icons
 
 const statusColors = {
-    Dihapus: 'bg-red-500',   // Merah untuk ditolak/gagal
+    Ditolak: 'bg-red-500',   // Merah untuk ditolak/gagal
     Menunggu: 'bg-yellow-500', // Kuning untuk menunggu
     Selesai: 'bg-green-500',   // Hijau untuk selesai
 };
@@ -16,12 +16,16 @@ const LaporanPage = () => {
         const fetchReports = async () => {
             try {
                 const token = sessionStorage.getItem('token');
+                const userNIK = JSON.parse(atob(token.split('.')[1])).NIK;  // Mengambil NIK dari token
                 const response = await axios.get('/forms/reports', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                setReports(response.data);
+
+                // Filter laporan yang sesuai dengan NIK pengguna yang sedang login
+                const userReports = response.data.filter(report => report.NIK === userNIK);
+                setReports(userReports);
             } catch (error) {
                 console.error("Error fetching reports:", error);
                 alert('Gagal mengambil laporan.');
