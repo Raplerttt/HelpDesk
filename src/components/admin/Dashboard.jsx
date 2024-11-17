@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../utils/axios';
-import { FaTachometerAlt, FaClipboardCheck, FaBug, FaCogs, FaBars, FaTimes, FaRegHourglass, FaCog, FaCheckCircle } from 'react-icons/fa';
+import { FaTachometerAlt, FaClipboardCheck, FaBug, FaCogs, FaBars, FaTimes, FaRegHourglass, FaCheckCircle } from 'react-icons/fa';
 import ContentHeader from './admin-components/ContentHeader';
 import InfoBox from './admin-components/InfoBox';
 import OverlayLoading from './admin-components/OverlayLoading';
 import SidebarSearch from './admin-components/SidebarSearch';
 import MenuItem from './admin-components/MenuItem';
-import SmallBox from './admin-components/SmallBox';
+// import SmallBox from './admin-components/SmallBox';
 import ReportDetailModal from './admin-components/ReportDetailModal';
-import ReportRow from './admin-components/ReportRow'; // Extracted row component
+// import ReportRow from './admin-components/ReportRow'; // Extracted row component
 
 const Dashboard = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -64,6 +64,7 @@ const Dashboard = () => {
             }
         }
     };
+
     
     useEffect(() => {
         const fetchData = async () => {
@@ -161,7 +162,7 @@ const StatsGrid = ({ stats }) => (
         <InfoBox title="Total Users" icon={<FaClipboardCheck />} color="blue" value={stats.totalUsers} />
         <InfoBox title="Active Users" icon={<FaBug />} color="green" value={stats.activeUsers} />
         <InfoBox title="Total Reports" icon={<FaCogs />} color="yellow" value={stats.totalReports} />
-        <InfoBox title="Pening Reports" icon={<FaClipboardCheck />} color="red" value={stats.pendingReports} />
+        <InfoBox title="Pending Reports" icon={<FaClipboardCheck />} color="red" value={stats.pendingReports} />
     </div>
 );
 
@@ -173,7 +174,7 @@ const ReportTable = ({ reports, onReportClick, onStatusChange }) => (
                     <th className="px-10 py-3 text-center">Name</th>
                     <th className="px-2 py-3 text-center">Date</th>
                     <th className="px-2 py-3 text-center">Issue Type</th>
-                    <th className="px-2 py-2 text-center">Description</th>
+                    <th className="px-2 py-3 text-center">Description</th>
                     <th className="px-2 py-3 text-center">Status</th>
                     <th className="px-2 py-3 text-center">Attachment</th>
                     <th className="px-2 py-3 text-center">Actions</th>
@@ -182,13 +183,18 @@ const ReportTable = ({ reports, onReportClick, onStatusChange }) => (
             <tbody>
                 {reports.length > 0 ? (
                     reports.map((report) => (
-                        <tr className="text-center" key={report.id} onClick={() => onReportClick(report)}>
-                            {/* Akses properti individual dari objek report */}
-                            <td>{report.user?.nama_lengkap || 'No Name'}</td> {/* Nama Lengkap */}
-                            <td>{new Date(report.tanggal).toLocaleDateString()}</td> {/* Tanggal */}
-                            <td className="px-3 py-4">{report.pilihan_kendala}</td> {/* Jenis Kendala */}
-                            <td className="px-3 py-4">{report.deskripsi}</td> {/* Deskripsi */}
-                            <td className="px-3 py-4">{report.status}</td> {/* Status */}
+                        <tr
+                            className="text-center"
+                            key={report.id}
+                            onClick={(e) => {
+                                e.preventDefault(); // Prevent row click entirely
+                            }}
+                        >
+                            <td>{report.user?.nama_lengkap || 'No Name'}</td>
+                            <td>{new Date(report.tanggal).toLocaleDateString()}</td>
+                            <td className="px-3 py-4">{report.pilihan_kendala}</td>
+                            <td className="px-3 py-4">{report.deskripsi}</td>
+                            <td className="px-3 py-4">{report.status}</td>
                             <td className="px-3 py-4">
                                 {report.lampiran ? (
                                     <a href={report.lampiran} target="_blank" rel="noopener noreferrer">View Attachment</a>
@@ -196,7 +202,8 @@ const ReportTable = ({ reports, onReportClick, onStatusChange }) => (
                                     'No Attachment'
                                 )}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 flex justify-center space-x-2">
+                                {/* Tombol Status */}
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation(); // Prevent row click event
@@ -212,7 +219,7 @@ const ReportTable = ({ reports, onReportClick, onStatusChange }) => (
                                         e.stopPropagation(); // Prevent row click event
                                         onStatusChange(report.id, 'Menunggu');
                                     }}
-                                    className="bg-yellow-500 text-white p-2 rounded-md ml-2"
+                                    className="bg-yellow-500 text-white p-2 rounded-md"
                                     title="Set as In Progress"
                                 >
                                     <FaRegHourglass size={20} />
@@ -222,7 +229,7 @@ const ReportTable = ({ reports, onReportClick, onStatusChange }) => (
                                         e.stopPropagation(); // Prevent row click event
                                         onStatusChange(report.id, 'Selesai');
                                     }}
-                                    className="bg-green-500 text-white p-2 rounded-md ml-2"
+                                    className="bg-green-500 text-white p-2 rounded-md"
                                     title="Set as Completed"
                                 >
                                     <FaCheckCircle size={20} />
@@ -239,5 +246,6 @@ const ReportTable = ({ reports, onReportClick, onStatusChange }) => (
         </table>
     </div>
 );
+
 
 export default Dashboard;
