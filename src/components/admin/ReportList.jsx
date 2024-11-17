@@ -81,7 +81,17 @@ const ReportList = () => {
                     </td>
                       {report.status}
                     </td>
-                    <td className="px-3 py-4">{report.deskripsi}</td>
+                    <td className="px-3 py-4">
+                            <div className="overflow-hidden">
+                                {report.deskripsi.length > 15 ? (
+                                    <>
+                                        {report.deskripsi.substring(0, 25)}...
+                                    </>
+                                ) : (
+                                    report.deskripsi
+                                )}
+                            </div>
+                    </td>
                     <td className="px-6 py-3">
                       <Link
                         to={`/admin/reports/${report.id}`}

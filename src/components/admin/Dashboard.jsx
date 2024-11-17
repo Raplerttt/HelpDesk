@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import axios from '../../utils/axios';
 import { FaTachometerAlt, FaClipboardCheck, FaBug, FaCogs, FaBars, FaTimes, FaRegHourglass, FaCheckCircle } from 'react-icons/fa';
 import ContentHeader from './admin-components/ContentHeader';
@@ -88,6 +89,10 @@ const Dashboard = () => {
                     }
                 });
 
+                 // Mengurutkan laporan berdasarkan tanggal terbaru
+                const sortedReports = reportsResponse.data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+
+                setReports(sortedReports); 
                 setStats(statsResponse.data);
                 setReports(reportsResponse.data);  // Set reports data
                 setIsLoading(false);
@@ -166,11 +171,12 @@ const StatsGrid = ({ stats }) => (
     </div>
 );
 
-const ReportTable = ({ reports, onReportClick, onStatusChange }) => (
+const ReportTable = ({ reports, onReportClick, onStatusChange}) => (
     <div className="overflow-x-auto bg-gray-300 shadow-md rounded-lg border-t-4 border-blue-600">
         <table className="min-w-full table-auto">
             <thead className="bg-gray-100">
                 <tr>
+                    <th className="px-4 py-3 text-center">No</th>
                     <th className="px-10 py-3 text-center">Name</th>
                     <th className="px-2 py-3 text-center">Date</th>
                     <th className="px-2 py-3 text-center">Issue Type</th>
@@ -182,20 +188,38 @@ const ReportTable = ({ reports, onReportClick, onStatusChange }) => (
             </thead>
             <tbody>
                 {reports.length > 0 ? (
-                    reports.map((report) => (
+                    reports.map((report, index) => (
                         <tr
-                            className="text-center"
+                            className="text-center border-2"
                             key={report.id}
                             onClick={(e) => {
                                 e.preventDefault(); // Prevent row click entirely
                             }}
                         >
-                            <td>{report.user?.nama_lengkap || 'No Name'}</td>
-                            <td>{new Date(report.tanggal).toLocaleDateString()}</td>
-                            <td className="px-3 py-4">{report.pilihan_kendala}</td>
-                            <td className="px-3 py-4">{report.deskripsi}</td>
-                            <td className="px-3 py-4">{report.status}</td>
-                            <td className="px-3 py-4">
+                            <td className='border-2'>{index + 1}</td> {/* Nomor urut */}
+                            <td className='border-2'>{report.user?.nama_lengkap || 'No Name'}</td>
+                            <td className='border-2'>{new Date(report.tanggal).toLocaleDateString('id-ID', {
+                                day: '2-digit',
+                                month: 'long',
+                                year: 'numeric',
+                            })}</td>
+                            <td className="border-2 px-3 py-4">{report.pilihan_kendala}</td>
+                            <td className="border-2 px-3 py-4">
+                            <div className="overflow-hidden">
+                                {report.deskripsi.length > 15 ? (
+                                    <>
+                                        {report.deskripsi.substring(0, 25)}...
+                                        <Link to={`/admin/reports/${report.id}`} className="text-blue-500 text-sm">
+                                            Baca Selengkapnya
+                                        </Link>
+                                    </>
+                                ) : (
+                                    report.deskripsi
+                                )}
+                            </div>
+                            </td>
+                            <td className="border-2 px-3 py-4">{report.status}</td>
+                            <td className="border-2 px-3 py-4">
                                 {report.lampiran ? (
                                     <a href={report.lampiran} target="_blank" rel="noopener noreferrer">View Attachment</a>
                                 ) : (

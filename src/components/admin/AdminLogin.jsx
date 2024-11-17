@@ -1,54 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../../utils/axios';
 import { FaSignInAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom'; // Menggunakan React Router untuk navigasi
 
-const AdminLogin = () => {
-  const [formData, setFormData] = useState({
-    username: '', 
-    password: ''
-  });
-
+// Custom hook untuk login logic
+const useLogin = () => {
+  const [formData, setFormData] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // Hook untuk navigasi halaman
+  const navigate = useNavigate();
 
+  // Periksa apakah token sudah ada di sessionStorage
+  useEffect(() => {
+    const token = sessionStorage.getItem('adminToken');
+    if (token) {
+      navigate('/admin/dashboard');
+    }
+  }, [navigate]);
+
+  // Handle perubahan input form
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
+  // Login logic
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
     try {
-      // Pastikan URL sesuai dengan yang ada di backend
       const response = await axios.post('admin/login', formData);
-
-      // Cek apakah token ada di response
+      
       if (response.data.token) {
-        // Simpan token dan username di sessionStorage
+        // Simpan token di sessionStorage
         sessionStorage.setItem('adminToken', response.data.token);
-        sessionStorage.setItem('adminUsername', formData.username); // Menyimpan username
+        sessionStorage.setItem('adminUsername', formData.username);
 
-        // Redirect ke dashboard admin
-        navigate('/admin/dashboard'); // Gunakan react-router-dom untuk pengalihan
+        navigate('/admin/dashboard');
       } else {
-        setError('Token tidak ditemukan dalam response. Coba lagi.');
+        setError('Token tidak ditemukan. Coba lagi.');
       }
     } catch (err) {
-      // Menampilkan error yang lebih jelas jika terjadi kegagalan
       setError(err.response?.data?.message || 'Login gagal, periksa kembali kredensial Anda.');
     } finally {
       setLoading(false);
     }
   };
+
+  return {
+    formData,
+    error,
+    loading,
+    handleChange,
+    handleSubmit,
+  };
+};
+
+const AdminLogin = () => {
+  const { formData, error, loading, handleChange, handleSubmit } = useLogin();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-100 animate__animated animate__fadeIn">
@@ -64,8 +79,8 @@ const AdminLogin = () => {
           <div className="mb-4">
             <label className="block text-sm font-semibold text-gray-700">Username</label>
             <input
-              type="text" 
-              name="username" 
+              type="text"
+              name="username"
               value={formData.username}
               onChange={handleChange}
               className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"

@@ -84,20 +84,19 @@ const ReportDetail = () => {
               </div>
             </div>
             <div
-  className={`flex items-center justify-center space-x-2 text-lg font-semibold ${
-    report.status === 'Ditolak'
-      ? 'bg-red-100 text-red-600'  // Merah untuk Ditolak
-      : report.status === 'Menunggu'
-      ? 'bg-yellow-100 text-yellow-600'  // Kuning untuk Menunggu
-      : report.status === 'Selesai'
-      ? 'bg-green-100 text-green-600'  // Hijau untuk Selesai
-      : 'bg-gray-100 text-gray-600'  // Default jika status tidak dikenali
-  } px-4 py-2 rounded-full inline-block`}
->
-  <FaExclamationCircle />
-  <span>{report.status}</span>
-</div>
-
+              className={`flex items-center justify-center space-x-2 text-lg font-semibold ${
+                report.status === 'Ditolak'
+                  ? 'bg-red-100 text-red-600'  // Merah untuk Ditolak
+                  : report.status === 'Menunggu'
+                  ? 'bg-yellow-100 text-yellow-600'  // Kuning untuk Menunggu
+                  : report.status === 'Selesai'
+                  ? 'bg-green-100 text-green-600'  // Hijau untuk Selesai
+                  : 'bg-gray-100 text-gray-600'  // Default jika status tidak dikenali
+              } px-4 py-2 rounded-full inline-block`}
+            >
+              <FaExclamationCircle />
+              <span>{report.status}</span>
+            </div>
           </div>
 
           <div className="border-t border-gray-300 my-6"></div>

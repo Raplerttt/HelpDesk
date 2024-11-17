@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Pastikan menggunakan useNavigate
 import { FaUser, FaBell, FaSignOutAlt, FaCog } from 'react-icons/fa';
+import EditProfilPopup from './EditProfilPopUp'; // Pastikan kamu sudah membuat komponen pop-up ini
 
 const ContentHeader = ({ notifications }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [newNotification, setNewNotification] = useState(false);
   const [adminName, setAdminName] = useState("");
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // State untuk mengontrol pop-up
+  const navigate = useNavigate(); // Hook untuk navigasi
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -26,17 +29,37 @@ const ContentHeader = ({ notifications }) => {
     }
   }, []);
 
+  // Fungsi untuk membuka dan menutup pop-up Edit Profil
+  const openPopup = () => {
+    setIsPopupOpen(true);
+    setDropdownOpen(false); // Menutup dropdown saat pop-up dibuka
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  // Fungsi untuk menangani logout
+  const handleLogout = () => {
+    // Menghapus sessionStorage
+    sessionStorage.removeItem('adminToken');
+    sessionStorage.removeItem('adminUsername');
+    
+    // Navigasi ke halaman login admin
+    navigate('/admin/login');
+  };
+
   return (
     <div className="p-4 mb-10 shadow-md rounded-lg">
       <div className="flex justify-between items-center flex-wrap">
         <div className="text-lg font-semibold mb-2 md:mb-0">
-          <Link to="/admin/home" className="text-blue-600 hover:text-blue-400 transition duration-300 ease-in-out">
-            Home Admin
+          Selamat datang, 
+          <Link to="/admin/home" className="text-blue-600 hover:text-blue-400 transition duration-300 ease-in-out ml-1">
+            {adminName}
           </Link>
         </div>
 
         <div className="flex items-center space-x-4 relative w-full md:w-auto">
-          <div className="font-semibold text-gray-800">{adminName}</div>
 
           {/* Ikon Profil dan Dropdown Menu */}
           <div className="relative">
@@ -50,20 +73,20 @@ const ContentHeader = ({ notifications }) => {
             {/* Dropdown Menu */}
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 bg-white border border-gray-300 shadow-lg rounded-lg w-48 p-2">
-                <Link
-                  to="/admin/profile"
+                <button
+                  onClick={openPopup} // Buka pop-up saat tombol Edit Profile diklik
                   className="flex items-center space-x-2 px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-200 ease-in-out"
                 >
                   <FaCog size={18} />
                   <span>Edit Profile</span>
-                </Link>
-                <Link
-                  to="/admin/login"
+                </button>
+                <button
+                  onClick={handleLogout} // Panggil handleLogout untuk logout
                   className="flex items-center space-x-2 px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-200 ease-in-out"
                 >
                   <FaSignOutAlt size={18} />
                   <span>Logout</span>
-                </Link>
+                </button>
               </div>
             )}
           </div>
@@ -76,10 +99,10 @@ const ContentHeader = ({ notifications }) => {
             <FaBell size={24} />
             {/* Notifikasi Badge */}
             {newNotification && (
-              <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center animate-ping">
-                3
-              </span>
-            )}
+          <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center animate-ping">
+            3
+          </span>
+        )}
           </Link>
         </div>
       </div>
@@ -99,6 +122,9 @@ const ContentHeader = ({ notifications }) => {
           <div className="text-sm mt-2">A new report from a user has been submitted. Check the details now!</div>
         </div>
       )}
+
+      {/* Pop-up Edit Profil */}
+      {isPopupOpen && <EditProfilPopup isOpen={isPopupOpen} onClose={closePopup} />}
     </div>
   );
 };

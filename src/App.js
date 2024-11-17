@@ -18,18 +18,18 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<LoginPage />} />
-        <Route path='/daftar' element={<SignUpPage />} />
-        <Route path='/profil' element={<ProtectedRoute element={<Profil />} />} />
-        <Route path='/layanan' element={<ProtectedRoute element={<LayananPage />} />} />
-        <Route path='/formulir' element={<ProtectedRoute element={<FormPage />} />} />
-        <Route path='/laporan' element={<ProtectedRoute element={<LaporanPage />} />} />
+        <Route path='/' element={<LoginPage />}/>
+        <Route path='/daftar' element={<SignUpPage />}/>
+        <Route path='/profil' element={<ProtectedRoute element={<Profil />} isAdminRoute={false}/>} />
+        <Route path='/layanan' element={<ProtectedRoute element={<LayananPage />} isAdminRoute={false}/>} />
+        <Route path='/formulir' element={<ProtectedRoute element={<FormPage />} isAdminRoute={false}/>} />
+        <Route path='/laporan' element={<ProtectedRoute element={<LaporanPage />} isAdminRoute={false}/>} />
         {/* Rute khusus untuk dashboard admin */}
-        <Route path='/admin/dashboard' element={<DashboardAdmin />} />
-        <Route path='/admin/statistic' element={<StatisticPage />} />
-        <Route path='/admin/reports/:id' element={<ReportDetail />} />
-        <Route path='/admin/reports' element={<ReportList />} />
-        <Route path='/admin/login' element={<AdminLoginPages />} />
+        <Route path='/admin/dashboard' element={<ProtectedRoute element={<DashboardAdmin />} isAdminRoute={true} />} />
+        <Route path='/admin/statistic' element={<ProtectedRoute element={<StatisticPage />} isAdminRoute={true} />} />
+        <Route path='/admin/reports/:id' element={<ProtectedRoute element={<ReportDetail />} isAdminRoute={true} />} />
+        <Route path='/admin/reports' element={<ProtectedRoute element={<ReportList />} isAdminRoute={true} />} />
+        <Route path='/admin/login' element={<AdminLoginPages />}/>
         <Route path='/admin/signup' element={<AdminSignupPages />} />
       </Routes>
     </Router>
